@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Adaptive icon foreground: a picture frame with a small landscape, inside the 66dp safe zone. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#263A4F"
+        android:pathData="M34,41 H74 V67 H34 Z" />
+    <path
+        android:fillColor="#F2B84B"
+        android:pathData="M66,44.5 A3.5,3.5 0 1 1 66,51.5 A3.5,3.5 0 1 1 66,44.5 Z" />
+    <path
+        android:fillColor="#3E6E5E"
+        android:pathData="M34,67 L46,52 L54,60 L60,55 L74,65 V67 Z" />
+    <path
+        android:fillColor="#5C9A7E"
+        android:pathData="M34,67 V63 C42,58 50,59 56,63 C62,61 68,62 74,64 V67 Z" />
+    <path
+        android:fillColor="#E9E4D8"
+        android:pathData="M29,36 H79 V72 H29 Z M34,41 V67 H74 V41 Z" />
+</vector>

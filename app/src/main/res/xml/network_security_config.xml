@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The app only talks to the chosen TV on the local network. The TV's device-info API is plain
+     HTTP on port 8001 at an address only known at run time, and network security config cannot
+     name an address range, so cleartext is allowed. -->
+<network-security-config xmlns:tools="http://schemas.android.com/tools">
+    <base-config
+        cleartextTrafficPermitted="true"
+        tools:ignore="InsecureBaseConfiguration" />
+</network-security-config>

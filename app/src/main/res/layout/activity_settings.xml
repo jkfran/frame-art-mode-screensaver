@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingStart="@dimen/page_horizontal"
+        android:paddingTop="@dimen/page_vertical"
+        android:paddingEnd="@dimen/page_horizontal"
+        android:paddingBottom="@dimen/page_vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/Text.Title"
+                android:text="@string/app_name" />
+
+            <TextView
+                style="@style/Text.Secondary"
+                android:layout_marginTop="8dp"
+                android:text="@string/intro" />
+
+            <!-- Your TV -->
+            <TextView
+                style="@style/Text.Section"
+                android:text="@string/section_tv" />
+
+            <TextView
+                android:id="@+id/tv_summary"
+                style="@style/Text" />
+
+            <LinearLayout style="@style/ButtonRow">
+
+                <Button
+                    android:id="@+id/test_now"
+                    style="@style/TvButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/button_gap"
+                    android:text="@string/test_now" />
+
+                <Button
+                    android:id="@+id/check_tv"
+                    style="@style/TvButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/button_gap"
+                    android:text="@string/check_tv" />
+
+                <Button
+                    android:id="@+id/find_tvs"
+                    style="@style/TvButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/find_tvs" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_result"
+                style="@style/Text"
+                android:layout_marginTop="12dp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/found_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/manual_ip_label"
+                style="@style/Text.Secondary"
+                android:layout_marginTop="16dp"
+                android:labelFor="@id/manual_ip"
+                android:text="@string/manual_ip_label" />
+
+            <LinearLayout style="@style/ButtonRow">
+
+                <EditText
+                    android:id="@+id/manual_ip"
+                    style="@style/TvTextField"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/button_gap"
+                    android:digits="0123456789."
+                    android:imeOptions="actionDone"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:maxLength="15"
+                    android:singleLine="true" />
+
+                <Button
+                    android:id="@+id/use_ip"
+                    style="@style/TvButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/use_ip" />
+            </LinearLayout>
+
+            <!-- Screensaver -->
+            <TextView
+                style="@style/Text.Section"
+                android:text="@string/section_screensaver" />
+
+            <TextView
+                android:id="@+id/screensaver_status"
+                style="@style/Text" />
+
+            <LinearLayout style="@style/ButtonRow">
+
+                <Button
+                    android:id="@+id/set_screensaver"
+                    style="@style/TvButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/button_gap"
+                    android:text="@string/set_screensaver" />
+
+                <Button
+                    android:id="@+id/screensaver_delay"
+                    style="@style/TvButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/button_gap"
+                    android:text="@string/screensaver_delay" />
+
+                <Button
+                    android:id="@+id/open_system_settings"
+                    style="@style/TvButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/open_system_settings" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/Text.Secondary"
+                android:layout_marginTop="12dp"
+                android:text="@string/screensaver_input_note" />
+
+            <TextView
+                android:id="@+id/screensaver_result"
+                style="@style/Text"
+                android:layout_marginTop="12dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/adb_commands"
+                style="@style/Text.Mono"
+                android:visibility="gone" />
+
+            <!-- Options -->
+            <TextView
+                style="@style/Text.Section"
+                android:text="@string/section_options" />
+
+            <CheckBox
+                android:id="@+id/end_after"
+                style="@style/TvCheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/end_after" />
+
+            <TextView
+                style="@style/Text.Secondary"
+                android:layout_marginStart="12dp"
+                android:text="@string/end_after_summary" />
+
+            <LinearLayout style="@style/ButtonRow">
+
+                <Button
+                    android:id="@+id/end_after_delay"
+                    style="@style/TvButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/power_key_fallback"
+                style="@style/TvCheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/power_key_fallback" />
+
+            <TextView
+                style="@style/Text.Secondary"
+                android:layout_marginStart="12dp"
+                android:text="@string/power_key_summary" />
+
+            <LinearLayout style="@style/ButtonRow">
+
+                <Button
+                    android:id="@+id/pair_remote"
+                    style="@style/TvButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pair_remote" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/options_result"
+                style="@style/Text"
+                android:layout_marginTop="12dp"
+                android:visibility="gone" />
+
+            <!-- Activity -->
+            <TextView
+                style="@style/Text.Section"
+                android:text="@string/section_log" />
+
+            <LinearLayout style="@style/ButtonRow">
+
+                <Button
+                    android:id="@+id/clear_log"
+                    style="@style/TvButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/clear_log" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/log_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical" />
+
+            <!-- About -->
+            <TextView
+                style="@style/Text.Section"
+                android:text="@string/section_about" />
+
+            <TextView
+                android:id="@+id/version"
+                style="@style/Text.Secondary" />
+
+            <TextView
+                style="@style/Text.Secondary"
+                android:text="@string/repo_url" />
+
+            <LinearLayout style="@style/ButtonRow">
+
+                <Button
+                    android:id="@+id/open_repo"
+                    style="@style/TvButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/open_repo" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

@@ -1,0 +1,31 @@
+name: Feature request
+description: Suggest a change or an addition.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would it solve?
+      description: Describe the situation, not only the solution.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: What should the app do, and when?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+
+  - type: input
+    id: devices
+    attributes:
+      label: TV and streamer
+      description: The models this concerns, if any.
+      placeholder: "The Frame 2023, NVIDIA SHIELD TV Pro"

@@ -1,0 +1,65 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    name: Build, test and lint
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Check out
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      # The open-source (MIT) cache provider; the default one is under separate terms.
+      # Wrapper validation is on by default.
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
+
+      # assembleRelease builds an unsigned release APK so that R8 and the release lint
+      # checks fail here rather than when a version is tagged.
+      - name: Build, test and lint
+        run: ./gradlew --continue assembleDebug testDebugUnitTest lintDebug assembleRelease
+
+      - name: Upload the debug APK
+        uses: actions/upload-artifact@v7
+        with:
+          name: frame-art-mode-screensaver-debug
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+
+      - name: Upload the lint and test reports
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: reports
+          path: |
+            app/build/reports/lint-results-debug.*
+            app/build/reports/tests/
+          if-no-files-found: ignore

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- TV launcher banner, 320 x 180: a picture frame and the app name in drawn lettering. -->
+<!-- Drawn once by the launcher; its size is the banner size TV launchers expect. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:width="320dp"
+    android:height="180dp"
+    android:viewportWidth="320"
+    android:viewportHeight="180"
+    tools:ignore="VectorRaster">
+    <path
+        android:fillColor="#15171A"
+        android:pathData="M0,0 H320 V180 H0 Z" />
+    <!-- Picture -->
+    <path
+        android:fillColor="#263A4F"
+        android:pathData="M30,58 H114 V122 H30 Z" />
+    <path
+        android:fillColor="#F2B84B"
+        android:pathData="M96,68 A6,6 0 1 1 96,80 A6,6 0 1 1 96,68 Z" />
+    <path
+        android:fillColor="#3E6E5E"
+        android:pathData="M30,122 L56,86 L72,104 L86,92 L114,118 V122 Z" />
+    <path
+        android:fillColor="#5C9A7E"
+        android:pathData="M30,122 V112 C46,102 64,104 80,114 C92,108 104,110 114,116 V122 Z" />
+    <!-- Frame: the inner rectangle runs the other way round, so it is a hole. -->
+    <path
+        android:fillColor="#E9E4D8"
+        android:pathData="M22,50 H122 V130 H22 Z M30,58 V122 H114 V58 Z" />
+    <!-- "FRAME" -->
+    <path
+        android:pathData="M142,60 V84 M142,60 H156 M142,71.5 H153 M161,84 V60 H168.5 A6.5,6.5 0 0 1 168.5,73 H161 M168,73 L176,84 M181,84 L190,60 L199,84 M184.375,75 H195.625 M204,84 V60 L214,75 L224,60 V84 M243,60 H229 V84 H243 M229,72 H240"
+        android:strokeWidth="3.4"
+        android:strokeColor="#F3F1EC"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <!-- "ART MODE" -->
+    <path
+        android:pathData="M142,122 L151,98 L160,122 M145.375,113 H156.625 M165,122 V98 H172.5 A6.5,6.5 0 0 1 172.5,111 H165 M172,111 L180,122 M185,98 H201 M193,98 V122 M213,122 V98 L223,113 L233,98 V122 M249,98 A11,12 0 1 1 249,122 A11,12 0 1 1 249,98 Z M265,98 H270 A12,12 0 0 1 270,122 H265 Z M301,98 H287 V122 H301 M287,110 H298"
+        android:strokeWidth="3.4"
+        android:strokeColor="#E2B866"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+</vector>

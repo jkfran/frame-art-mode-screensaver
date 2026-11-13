@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Frame Art Mode</string>
+    <string name="dream_label">Frame Art Mode</string>
+    <string name="intro">When this device\'s screensaver starts, Frame Art Mode switches your Samsung The Frame TV to Art Mode over the local network. Nothing is sent when the TV is off.</string>
+
+    <!-- TV -->
+    <string name="section_tv">Your TV</string>
+    <string name="tv_none">No TV chosen yet. Use Find TVs, or enter the TV\'s IP address below.</string>
+    <string name="tv_summary">%1$s · %2$s · %3$s</string>
+    <string name="tv_unnamed">Samsung TV</string>
+    <string name="model_unknown">model unknown</string>
+    <string name="test_now">Test now: switch to Art Mode</string>
+    <string name="check_tv">Check TV</string>
+    <string name="find_tvs">Find TVs</string>
+    <string name="manual_ip_label">Or enter the TV\'s IP address (for example 192.168.1.20)</string>
+    <string name="use_ip">Use this address</string>
+    <string name="invalid_ip">Enter an IPv4 address, such as 192.168.1.20.</string>
+    <string name="found_tv">%1$s · %2$s · %3$s · %4$s</string>
+    <string name="found_frame">The Frame</string>
+    <string name="found_not_frame">not a Frame</string>
+    <string name="found_current">%1$s (chosen)</string>
+
+    <string name="busy">Still working on the previous request…</string>
+    <string name="working_test">Asking the TV to switch to Art Mode… If the TV asks to allow Frame Art Mode, choose Allow.</string>
+    <string name="working_check">Reading the TV\'s state… If the TV asks to allow Frame Art Mode, choose Allow.</string>
+    <string name="working_scan">Looking for Samsung TVs on this network…</string>
+    <string name="working_lookup">Asking %1$s…</string>
+    <string name="working_pair">Connecting to the TV\'s remote control. Choose Allow on the TV when it asks.</string>
+    <string name="no_network">This device has no local network connection.</string>
+    <string name="scan_none">No Samsung TV answered. Make sure the TV is on and on the same network as this device.</string>
+    <plurals name="scan_found">
+        <item quantity="one">Found %d Samsung TV. Choose your The Frame below.</item>
+        <item quantity="other">Found %d Samsung TVs. Choose your The Frame below.</item>
+    </plurals>
+    <string name="lookup_failed">No Samsung TV answered at %1$s. Turn the TV on and check the address.</string>
+    <string name="not_a_frame_choice">%1$s does not report Art Mode support, so it cannot be used.</string>
+    <string name="tv_chosen">Chosen: %1$s. Use Test now to try it.</string>
+    <string name="unexpected_error">Something went wrong: %1$s</string>
+
+    <!-- Check TV -->
+    <string name="check_name">TV: %1$s</string>
+    <string name="check_model">Model: %1$s</string>
+    <string name="check_power">Power state: %1$s</string>
+    <string name="check_power_missing">not reported</string>
+    <string name="check_frame_yes">Art Mode support: yes</string>
+    <string name="check_frame_no">Art Mode support: no</string>
+    <string name="check_art_on">Art Mode: on</string>
+    <string name="check_art_off">Art Mode: off (showing TV)</string>
+    <string name="check_art_unknown">Art Mode: unknown</string>
+    <string name="check_api">Art service version: %1$s</string>
+    <string name="check_api_unknown">unknown</string>
+
+    <!-- Screensaver -->
+    <string name="section_screensaver">Screensaver</string>
+    <string name="screensaver_status_ours">Frame Art Mode is this device\'s screensaver. It starts after %1$s of inactivity.</string>
+    <string name="screensaver_status_ours_disabled">Frame Art Mode is selected, but screensavers are switched off on this device.</string>
+    <string name="screensaver_status_other">Frame Art Mode is not this device\'s screensaver yet.</string>
+    <string name="screensaver_status_unknown">This device does not let apps read its screensaver settings.</string>
+    <string name="screensaver_status_too_long">Frame Art Mode is this device\'s screensaver, but it never starts: its delay (%1$s) is not shorter than the time after which this device goes to sleep (%2$s). Choose a shorter Screensaver delay, or a longer turn-off time in this device\'s energy settings.</string>
+    <string name="screensaver_input_note">Frame Art Mode cannot tell which input the TV is showing. If this device stays awake after the TV switches to another input, its screensaver still switches the TV to Art Mode. On Android 12 and later, this command makes this device sleep when the TV switches away from it:\nadb shell cmd hdmi_control cec_setting set power_state_change_on_active_source_lost standby_now</string>
+    <string name="delay_unknown">an unknown time</string>
+    <string name="set_screensaver">Set as screensaver</string>
+    <string name="screensaver_delay">Screensaver delay</string>
+    <string name="open_system_settings">Open system settings</string>
+    <string name="screensaver_set">Done. Frame Art Mode is now the screensaver.</string>
+    <string name="screensaver_set_failed">The system did not accept the change.</string>
+    <string name="adb_needed">Google TV and many Android TV devices only offer their own screensaver in Settings. Run these commands once from a computer with ADB (developer options and USB or network debugging on). The first line lets this app change the setting itself; after it, Set as screensaver works here. The last number is the delay in milliseconds; it must be shorter than the time after which this device goes to sleep, or the screensaver never starts.</string>
+    <string name="adb_commands" translatable="false">adb shell pm grant %1$s android.permission.WRITE_SECURE_SETTINGS\nadb shell settings put secure screensaver_components %2$s\nadb shell settings put secure screensaver_enabled 1\nadb shell settings put secure screensaver_activate_on_sleep 1\nadb shell settings put system screen_off_timeout %3$s</string>
+    <string name="delay_title">Start the screensaver after</string>
+    <string name="delay_title_limited">Start the screensaver after (this device sleeps after %1$s)</string>
+    <string name="delay_too_long">This device goes to sleep after %1$s of inactivity, so the screensaver delay has to be shorter than that.</string>
+    <string name="delay_no_room">This device goes to sleep after %1$s of inactivity, which leaves no time for a screensaver. Choose a longer turn-off time in this device\'s energy settings first.</string>
+    <string name="delay_set">The screensaver now starts after %1$s.</string>
+    <string name="delay_needs_adb">This app may not change the delay yet. Run this from a computer with ADB, or grant the permission shown under Set as screensaver:</string>
+    <string name="adb_delay_command" translatable="false">adb shell settings put system screen_off_timeout %1$s</string>
+    <string name="no_system_settings">This device has no screensaver settings screen to open.</string>
+    <plurals name="minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="seconds">
+        <item quantity="one">%d second</item>
+        <item quantity="other">%d seconds</item>
+    </plurals>
+
+    <!-- Options -->
+    <string name="section_options">Options</string>
+    <string name="end_after">End the screensaver after Art Mode starts</string>
+    <string name="end_after_summary">Off by default. Normally the TV puts this device to sleep over HDMI-CEC once Art Mode is on. If this device stays awake, this ends the screensaver after a delay. Ending it lets the device go to sleep by itself, and over HDMI-CEC that can turn the TV off or switch its input instead of leaving it in Art Mode.</string>
+    <string name="end_after_delay">Delay: %1$s</string>
+    <string name="end_after_title">End the screensaver after</string>
+    <string name="power_key_fallback">Power-key fallback</string>
+    <string name="power_key_summary">Off by default. When the TV\'s Art Mode service cannot be reached, or refuses the request with an error other than the Art Store terms, send one power-key press over the TV\'s remote-control channel, after checking again that the TV reports that it is on. Nothing is pressed when the TV did not answer in time, refused access, or may already have switched. On The Frame a press toggles between TV and Art Mode, and without its Art Mode service the app cannot see which one the TV shows: if it already shows art, the press switches it back to TV. The TV has to allow this app once.</string>
+    <string name="pair_remote">Allow remote control on the TV</string>
+    <string name="pair_remote_done">Remote control allowed · pair again</string>
+    <string name="pair_first">Use Allow remote control on the TV so the fallback can work.</string>
+
+    <!-- Event log -->
+    <string name="section_log">Activity</string>
+    <string name="log_empty">Nothing yet. Each screensaver start and each test is listed here.</string>
+    <string name="clear_log">Clear activity</string>
+    <string name="log_line">%1$s · %2$s · %3$s</string>
+    <string name="log_detail">%1$s (%2$s)</string>
+    <string name="trigger_dream">Screensaver</string>
+    <string name="trigger_test">Test</string>
+    <string name="trigger_check">Check</string>
+    <string name="trigger_pairing">Pairing</string>
+
+    <!-- About -->
+    <string name="section_about">About</string>
+    <string name="version">Version %1$s · MIT licence</string>
+    <string name="repo_url" translatable="false">https://github.com/jkfran/frame-art-mode-screensaver</string>
+    <string name="open_repo">Open project page</string>
+
+    <!-- Screensaver status line -->
+    <string name="dream_status">Frame Art Mode: %1$s</string>
+
+    <!-- Outcomes -->
+    <string name="outcome_not_configured">No TV chosen. Open Frame Art Mode and choose your TV.</string>
+    <string name="outcome_terms_pending">Waiting for the Samsung Art Store terms to be accepted on the TV. After accepting them, open Frame Art Mode and use Test now.</string>
+    <string name="outcome_tv_unreachable">The TV did not answer. It is probably off, or on another network.</string>
+    <string name="outcome_tv_off">The TV is in standby, so nothing was sent.</string>
+    <string name="outcome_power_state_unknown">This TV does not report whether it is on, so Frame Art Mode cannot act on it safely and sent nothing. This TV model cannot be used with the app.</string>
+    <string name="outcome_different_tv">Another TV now answers at the chosen address. Open Frame Art Mode and choose your TV again.</string>
+    <string name="outcome_not_a_frame">This TV does not report Art Mode support.</string>
+    <string name="outcome_connect_failed">Could not connect to the TV\'s Art Mode service. Check that this device and the TV are on the same network and subnet (not a guest network or another VLAN) and that the TV is fully on, then use Test now in Frame Art Mode.</string>
+    <string name="outcome_access_denied">The TV refused the connection. On the TV, open Device Connection Manager, then Device List, and allow Frame Art Mode.</string>
+    <string name="outcome_channel_timeout">The TV\'s Art Mode service did not respond in time. If the TV asks to allow Frame Art Mode, open Frame Art Mode, use Test now and choose Allow on the TV.</string>
+    <string name="outcome_tv_error">The TV rejected the request. Its message is under Activity in Frame Art Mode; use Test now there to try again.</string>
+    <string name="outcome_already_art">The TV was already in Art Mode.</string>
+    <string name="outcome_art_confirmed">The TV switched to Art Mode.</string>
+    <string name="outcome_art_requested">The TV accepted the request for Art Mode.</string>
+    <string name="outcome_terms_not_accepted">The TV needs the Samsung Art Store terms accepted first. On the TV\'s Terms &amp; Conditions, Privacy Notice &amp; Device Features screen, tick Terms and Conditions for the Samsung Art Store and Art Store Privacy Notice, then press OK. The other consents are not needed. Then use Test now in Frame Art Mode.</string>
+    <string name="outcome_art_request_failed">The TV refused to switch to Art Mode. The error code is under Activity in Frame Art Mode; use Test now there to try again.</string>
+    <string name="outcome_request_timeout">The TV did not answer in time.</string>
+    <string name="outcome_connection_lost">The connection to the TV closed before it answered.</string>
+    <string name="outcome_ended_after_request">The screensaver ended after Art Mode was requested.</string>
+    <string name="outcome_cancelled">The screensaver ended before the TV was asked.</string>
+    <string name="outcome_time_limit">The TV took too long, so the attempt was stopped.</string>
+    <string name="outcome_power_key_sent">Sent one power-key press (fallback).</string>
+    <string name="outcome_power_key_failed">Could not send the power-key press (fallback).</string>
+    <string name="outcome_remote_paired">The TV allowed remote control.</string>
+    <string name="outcome_check_ok">The TV answered.</string>
+    <string name="outcome_unexpected_error">Something unexpected went wrong; nothing more was sent.</string>
+</resources>

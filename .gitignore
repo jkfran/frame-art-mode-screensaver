@@ -1,0 +1,26 @@
+# Gradle and Kotlin
+.gradle/
+build/
+.kotlin/
+
+# Local machine configuration
+local.properties
+
+# Built packages: release APKs are published by CI, never committed
+*.apk
+*.aab
+*.ap_
+/app/release/
+/dist/
+
+# Signing material
+*.jks
+*.keystore
+*.p12
+keystore.properties
+
+# IDEs and OS files
+.idea/
+*.iml
+.DS_Store
+captures/

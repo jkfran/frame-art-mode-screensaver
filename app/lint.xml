@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- targetSdk 37 turns on Android 17's local network protection, which needs the
+         ACCESS_LOCAL_NETWORK runtime permission. A screensaver cannot show a permission
+         prompt, so the app stays on 36 until it has a flow for that. -->
+    <issue id="OldTargetApi" severity="ignore" />
+    <!-- Versions are pinned on purpose and updated deliberately. -->
+    <issue id="GradleDependency" severity="ignore" />
+    <issue id="NewerVersionAvailable" severity="ignore" />
+    <issue id="AndroidGradlePluginVersion" severity="ignore" />
+</lint>

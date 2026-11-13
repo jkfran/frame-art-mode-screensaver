@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ic_launcher_background">#15171A</color>
+    <color name="surface">#101215</color>
+    <color name="surface_raised">#22262C</color>
+    <color name="text_primary">#F3F1EC</color>
+    <color name="text_secondary">#B5B9C0</color>
+    <color name="accent">#E2B866</color>
+    <color name="focus">#F3F1EC</color>
+    <color name="on_focus">#101215</color>
+    <color name="outline">#5A6069</color>
+    <color name="dream_text">#8A8F96</color>
+</resources>

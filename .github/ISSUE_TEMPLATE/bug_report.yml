@@ -1,0 +1,119 @@
+name: Bug report
+description: Something does not work as described, or a TV or streamer that is not in the compatibility table.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please check the [troubleshooting and FAQ section](https://github.com/jkfran/frame-art-mode-screensaver#troubleshooting-and-faq) first.
+        Do not include tokens, Wi-Fi passwords or other secrets. Security issues go through [private reporting](https://github.com/jkfran/frame-art-mode-screensaver/security/advisories/new).
+
+  - type: input
+    id: app-version
+    attributes:
+      label: Frame Art Mode version
+      description: Shown in the app's About section.
+      placeholder: "0.1.0"
+    validations:
+      required: true
+
+  - type: input
+    id: tv-model
+    attributes:
+      label: TV model and year
+      description: The model code is on the label at the back of the TV, or in the app under Check TV.
+      placeholder: "The Frame 55\" 2022, QE55LS03BAUXXU"
+    validations:
+      required: true
+
+  - type: input
+    id: tv-firmware
+    attributes:
+      label: TV firmware version
+      description: On the TV, under Settings > Support > About This TV, or Software Update.
+    validations:
+      required: true
+
+  - type: input
+    id: streamer
+    attributes:
+      label: Streamer model and Android version
+      description: On the streamer, under Settings > System > About.
+      placeholder: "Chromecast with Google TV (4K), Android 14"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: terms
+    attributes:
+      label: Art Store terms on the TV
+      description: Were "Terms and Conditions for the Samsung Art Store" and "Art Store Privacy Notice" accepted on the TV?
+      options:
+        - "Yes, both were accepted"
+        - "No"
+        - "Not sure"
+        - "The TV never showed the terms screen"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: cec
+    attributes:
+      label: HDMI-CEC
+      description: Anynet+ (HDMI-CEC) on the TV, and HDMI-CEC on the streamer.
+      options:
+        - "On at both ends"
+        - "Off on the TV"
+        - "Off on the streamer"
+        - "Not sure"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: selection
+    attributes:
+      label: How was Frame Art Mode selected as the screensaver?
+      options:
+        - "Set as screensaver in the app, after the ADB grant"
+        - "adb shell settings put commands"
+        - "The system's Screen saver settings"
+        - "It is not selected; the problem is with Test now or Check TV"
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened, and what did you expect?
+      description: Include what the TV showed, and whether the streamer went to sleep.
+    validations:
+      required: true
+
+  - type: textarea
+    id: activity
+    attributes:
+      label: Activity list
+      description: Copy the relevant lines from the app's Activity section, newest first.
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: check-tv
+    attributes:
+      label: Check TV result
+      description: What the app shows after Check TV, with the TV on.
+      render: text
+
+  - type: textarea
+    id: logcat
+    attributes:
+      label: Log (optional)
+      description: "From a computer with ADB, right after the problem: `adb logcat -d -s FrameArtMode`"
+      render: text
+
+  - type: textarea
+    id: more
+    attributes:
+      label: Anything else
+      description: For example the HDMI-CEC settings from docs/GOOGLE_TV_SETUP.md, other devices on the TV's HDMI inputs, or a soundbar.
