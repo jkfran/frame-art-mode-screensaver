@@ -7,6 +7,7 @@ import io.github.jkfran.frameartmode.testing.jsonResponse
 import kotlinx.coroutines.runBlocking
 import mockwebserver3.MockResponse
 import mockwebserver3.MockWebServer
+import mockwebserver3.SocketEffect
 import okio.ByteString.Companion.toByteString
 import org.json.JSONObject
 import org.junit.After
@@ -315,6 +316,23 @@ class FrameTvClientTest {
         val info = client.deviceInfo(host, FAST)
         assertTrue(info.frameTvSupport)
         assertEquals("/api/v2/", server.takeRequest(1, TimeUnit.SECONDS)!!.url.encodedPath)
+    }
+
+    @Test
+    fun `device info works again when the TV closed the previous connection`() = runBlocking {
+        // The TV closes the connection after every reply on port 8001, without a
+        // "Connection: close" header. A pooled connection must not be reused for the next read.
+        repeat(3) {
+            server.enqueue(
+                MockResponse.Builder()
+                    .addHeader("Content-Type", "application/json")
+                    .body(Frames.deviceInfo())
+                    .onResponseEnd(SocketEffect.CloseSocket())
+                    .build(),
+            )
+        }
+        repeat(3) { assertTrue(client.deviceInfo(host, FAST).frameTvSupport) }
+        assertEquals(3, server.requestCount)
     }
 
     @Test

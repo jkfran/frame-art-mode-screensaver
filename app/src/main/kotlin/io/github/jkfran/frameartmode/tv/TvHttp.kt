@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.Call
 import okhttp3.Callback
+import okhttp3.ConnectionPool
 import okhttp3.ConnectionSpec
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -11,6 +12,7 @@ import java.io.IOException
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit.MILLISECONDS
+import java.util.concurrent.TimeUnit.SECONDS
 import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSocketFactory
 import javax.net.ssl.TrustManager
@@ -34,6 +36,10 @@ object TvHttp {
 
     private val base: OkHttpClient by lazy {
         OkHttpClient.Builder()
+            // The TV's HTTP server on port 8001 closes the connection after every reply without
+            // sending "Connection: close". A pooled connection would fail the next request with
+            // "unexpected end of stream", so no connection is kept for reuse.
+            .connectionPool(ConnectionPool(0, 1, SECONDS))
             .connectionSpecs(
                 listOf(ConnectionSpec.MODERN_TLS, ConnectionSpec.COMPATIBLE_TLS, ConnectionSpec.CLEARTEXT),
             )
