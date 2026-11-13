@@ -187,8 +187,10 @@ private class SocketArtSession(
         return mode
     }
 
-    override suspend fun setArtMode(on: Boolean, timeoutMs: Long) {
-        request(ArtProtocol.SET_ARTMODE_STATUS, mapOf("value" to if (on) "on" else "off"), timeoutMs)
+    override suspend fun setArtMode(on: Boolean, timeoutMs: Long): SetReply {
+        val value = if (on) "on" else "off"
+        val payload = request(ArtProtocol.SET_ARTMODE_STATUS, mapOf("value" to value), timeoutMs, announced = value)
+        return if (ArtProtocol.announcedArtMode(payload) == value) SetReply.ANNOUNCED else SetReply.ACCEPTED
     }
 
     /** For display only, so any failure reads as "unknown" rather than failing the caller. */
@@ -211,14 +213,23 @@ private class SocketArtSession(
 
     override suspend fun close(timeoutMs: Long) = socket.close(timeoutMs)
 
-    private suspend fun request(name: String, params: Map<String, String>, timeoutMs: Long): JSONObject =
+    /**
+     * Sends one request and returns its reply. With [announced], an `art_mode_changed`
+     * announcement of that value also ends the wait and is returned instead.
+     */
+    private suspend fun request(
+        name: String,
+        params: Map<String, String>,
+        timeoutMs: Long,
+        announced: String? = null,
+    ): JSONObject =
         inFlight.withLock {
             val id = newId()
             if (!socket.send(ArtProtocol.artRequest(name, id, params))) throw TvException.ConnectionLost(name)
-            awaitReply(name, id, nowMs() + timeoutMs)
+            awaitReply(name, id, nowMs() + timeoutMs, announced)
         }
 
-    private suspend fun awaitReply(name: String, id: String, deadline: Long): JSONObject {
+    private suspend fun awaitReply(name: String, id: String, deadline: Long, announced: String?): JSONObject {
         while (true) {
             val frame = when (val next = socket.next(deadline - nowMs())) {
                 TvSocket.Next.Timeout -> throw TvException.RequestTimeout(name)
@@ -231,8 +242,11 @@ private class SocketArtSession(
             }
             if (frame.event == ArtProtocol.EVENT_ERROR) throw TvException.TvError(ArtProtocol.errorMessageOf(frame))
             val payload = ArtProtocol.d2dPayload(frame) ?: continue
+            val announcement = ArtProtocol.announcedArtMode(payload)
+            if (announcement != null) logger.log("The TV announced Art Mode $announcement")
+            if (announced != null && announcement == announced) return payload
             if (!isReplyTo(payload, id, name)) {
-                logger.log("Skipped ${ArtProtocol.subEvent(payload)} not addressed to this request")
+                if (announcement == null) logger.log("Skipped ${ArtProtocol.subEvent(payload)} not addressed to this request")
                 continue
             }
             if (ArtProtocol.isError(payload)) {

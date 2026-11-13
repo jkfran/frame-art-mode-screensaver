@@ -40,7 +40,7 @@ Frame Art Mode keeps HDMI-CEC on and asks the TV for Art Mode directly, before t
 1. When the streamer has been idle for the screensaver delay, Android starts the Frame Art Mode screensaver (a `DreamService`, the Android screensaver API once called Daydream). The screen stays black.
 2. The app reads the TV's device information at `http://<tv>:8001/api/v2/`. It goes on only if the TV that answers is the one you chose, reports `PowerState` `on` and supports Art Mode (`FrameTVSupport` `true`). A TV that is off or in standby is never woken or switched.
 3. It opens the TV's art channel (`com.samsung.art-app`, a WebSocket on port 8002) and reads the Art Mode status. If Art Mode is already on, it stops there.
-4. It sends `set_artmode_status` `on`, once, and reads the status back.
+4. It sends `set_artmode_status` `on`, once. The TV's reply, or its own `art_mode_changed` announcement if that comes first, confirms it; after a reply the app also reads the status back.
 5. The Frame switches to Art Mode and broadcasts HDMI-CEC `<Standby>`, which every CEC device connected to the TV receives. The streamer goes to sleep. Because the TV asked for it, the streamer does not send `<Standby>` back. It still sends `<Inactive Source>`, which a TV in Art Mode ignores, so the TV stays in Art Mode.
 
 ```mermaid
@@ -206,7 +206,7 @@ Selecting a third-party screensaver on Google TV needs ADB once. Any ADB client 
 
 | Device | Status |
 |---|---|
-| Samsung The Frame (2024) with Google TV Streamer (Android 14) | In testing |
+| Samsung The Frame (2024) with Google TV Streamer (Android 14) | Verified |
 | Other Samsung The Frame models, and The Frame Pro, whose art channel accepts `set_artmode_status` | Expected to work |
 | Chromecast with Google TV (4K and HD) | Expected to work |
 | NVIDIA SHIELD TV | Expected to work |

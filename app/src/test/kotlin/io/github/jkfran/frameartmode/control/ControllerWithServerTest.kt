@@ -72,6 +72,19 @@ class ControllerWithServerTest {
     }
 
     @Test
+    fun `the TV's announcement confirms when its reply never comes`() {
+        server.enqueue(jsonResponse(Frames.deviceInfo()))
+        val tv = tv(onSet = { _, socket ->
+            socket.send(Frames.d2d(JSONObject().put("event", "art_mode_changed").put("status", "on")))
+        })
+        server.enqueue(tv.response())
+        val result = dream()
+        assertEquals(Outcome.ART_CONFIRMED, result.outcome)
+        assertEquals(Step.SET_STATUS, result.step)
+        assertEquals(listOf("get_artmode_status", "set_artmode_status"), tv.requestNames())
+    }
+
+    @Test
     fun `already in Art Mode sends no request`() {
         server.enqueue(jsonResponse(Frames.deviceInfo()))
         val tv = ScriptedTv { request, socket ->

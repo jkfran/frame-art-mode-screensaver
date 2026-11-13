@@ -6,6 +6,7 @@ import io.github.jkfran.frameartmode.testing.MemoryStore
 import io.github.jkfran.frameartmode.testing.MemoryText
 import io.github.jkfran.frameartmode.testing.frameInfo
 import io.github.jkfran.frameartmode.tv.ArtMode
+import io.github.jkfran.frameartmode.tv.SetReply
 import io.github.jkfran.frameartmode.tv.Timeouts
 import io.github.jkfran.frameartmode.tv.TvException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -101,6 +102,18 @@ class ArtModeControllerTest {
         assertEquals(2, tv.session.gets)
         assertEquals(1, tv.session.closes)
         assertTrue(result.outcome.success)
+    }
+
+    @Test
+    fun `the TV's announcement confirms without a read-back`() = runTest {
+        tv.session = FakeSession(ArtMode.TV).apply { setReply = SetReply.ANNOUNCED }
+        val result = dream()
+        assertEquals(Outcome.ART_CONFIRMED, result.outcome)
+        assertEquals(Step.SET_STATUS, result.step)
+        assertNull(result.fallback)
+        assertEquals(1, tv.session.sets)
+        assertEquals(1, tv.session.gets)
+        assertEquals(1, tv.session.closes)
     }
 
     @Test

@@ -119,6 +119,14 @@ Replies arrive as `d2d_service_message` events whose `data` is again a JSON-enco
 
 The app takes as the answer the first payload whose `request_id` (or, without one, `id`) equals the request's UUID, and skips every other frame. It does not depend on the reply's `event` name, except for `error`. For `get_artmode_status`, `value` `on` means Art Mode and `off` means TV mode. Older art APIs send binary frames that start with the JSON object; the app reads the leading object and ignores the rest.
 
+The art app also announces every change of Art Mode to all connected clients, with no id of the request that caused it (decoded `data`):
+
+```json
+{"event": "art_mode_changed", "status": "on", "target_client_id": "<client-id>"}
+```
+
+While a `set_artmode_status` is pending, an `art_mode_changed` announcement with the value asked for also counts as the answer, and no read-back follows. The TV puts the streamer to sleep over HDMI-CEC within a few seconds of switching to Art Mode, often before its reply to the request arrives; the announcement comes first. An announcement never answers `get_artmode_status`.
+
 An error looks like this (decoded `data`):
 
 ```json

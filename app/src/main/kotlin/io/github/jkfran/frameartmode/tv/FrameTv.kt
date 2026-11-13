@@ -47,11 +47,26 @@ interface FrameTv {
 interface ArtSession {
     suspend fun artMode(timeoutMs: Long): ArtMode
 
-    /** Returns when the TV accepts the request; throws [TvException.RequestFailed] when it refuses. */
-    suspend fun setArtMode(on: Boolean, timeoutMs: Long)
+    /**
+     * Returns when the TV accepts the request, or announces that Art Mode changed to the value
+     * asked for, whichever comes first; throws [TvException.RequestFailed] when it refuses.
+     */
+    suspend fun setArtMode(on: Boolean, timeoutMs: Long): SetReply
 
     /** The art API version, or null when the TV does not say. For display only. */
     suspend fun apiVersion(timeoutMs: Long): String?
 
     suspend fun close(timeoutMs: Long)
+}
+
+/** How the TV confirmed a `set_artmode_status`. */
+enum class SetReply {
+    /** Its reply to the request. */
+    ACCEPTED,
+
+    /**
+     * Its `art_mode_changed` announcement with the value asked for. When the TV switches to Art
+     * Mode it may put this device to sleep over HDMI-CEC before the reply itself arrives.
+     */
+    ANNOUNCED,
 }

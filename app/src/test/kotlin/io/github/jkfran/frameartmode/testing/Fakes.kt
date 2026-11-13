@@ -7,6 +7,7 @@ import io.github.jkfran.frameartmode.tv.ArtMode
 import io.github.jkfran.frameartmode.tv.ArtSession
 import io.github.jkfran.frameartmode.tv.DeviceInfo
 import io.github.jkfran.frameartmode.tv.FrameTv
+import io.github.jkfran.frameartmode.tv.SetReply
 import io.github.jkfran.frameartmode.tv.Timeouts
 import io.github.jkfran.frameartmode.tv.TvException
 import kotlinx.coroutines.delay
@@ -67,11 +68,14 @@ class FakeSession(vararg modes: Any) : ArtSession {
         }
     }
 
-    override suspend fun setArtMode(on: Boolean, timeoutMs: Long) {
+    var setReply = SetReply.ACCEPTED
+
+    override suspend fun setArtMode(on: Boolean, timeoutMs: Long): SetReply {
         check(on) { "the app only ever asks for Art Mode on" }
         sets++
         if (setSuspendsMs > 0) delay(setSuspendsMs)
         setError?.let { throw it }
+        return setReply
     }
 
     override suspend fun apiVersion(timeoutMs: Long): String {

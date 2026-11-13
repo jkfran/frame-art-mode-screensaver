@@ -156,6 +156,42 @@ class FrameTvClientTest {
     }
 
     @Test
+    fun `set ends at the TV's announcement of the value asked for`() = runBlocking {
+        // The TV announces Art Mode and puts the streamer to sleep; its reply never arrives.
+        val tv = ScriptedTv { _, socket ->
+            socket.send(Frames.d2d(JSONObject().put("event", "art_mode_changed").put("status", "on")))
+        }
+        server.enqueue(tv.response())
+        val session = open()
+        assertEquals(SetReply.ANNOUNCED, session.setArtMode(on = true, timeoutMs = FAST.setMs))
+        session.close(FAST.closeMs)
+    }
+
+    @Test
+    fun `an announcement of another value does not end the set`() = runBlocking {
+        val tv = ScriptedTv { request, socket ->
+            socket.send(Frames.d2d(JSONObject().put("event", "art_mode_changed").put("status", "off")))
+            socket.send(Frames.reply(request))
+        }
+        server.enqueue(tv.response())
+        val session = open()
+        assertEquals(SetReply.ACCEPTED, session.setArtMode(on = true, timeoutMs = FAST.setMs))
+        session.close(FAST.closeMs)
+    }
+
+    @Test
+    fun `an announcement never answers a status read`() = runBlocking {
+        val tv = ScriptedTv { request, socket ->
+            socket.send(Frames.d2d(JSONObject().put("event", "art_mode_changed").put("status", "on")))
+            socket.send(Frames.reply(request, "value" to "off"))
+        }
+        server.enqueue(tv.response())
+        val session = open()
+        assertEquals(ArtMode.TV, session.artMode(FAST.getMs))
+        session.close(FAST.closeMs)
+    }
+
+    @Test
     fun `binary frame with a tail`() = runBlocking {
         val tv = ScriptedTv { request, socket ->
             val bytes = Frames.reply(request, "value" to "on").toByteArray() + byteArrayOf(0, 1)

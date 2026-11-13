@@ -6,6 +6,7 @@ import io.github.jkfran.frameartmode.tv.ArtSession
 import io.github.jkfran.frameartmode.tv.DeviceInfo
 import io.github.jkfran.frameartmode.tv.FrameTv
 import io.github.jkfran.frameartmode.tv.Logger
+import io.github.jkfran.frameartmode.tv.SetReply
 import io.github.jkfran.frameartmode.tv.TvException
 import io.github.jkfran.frameartmode.tv.Timeouts
 import kotlinx.coroutines.CancellationException
@@ -144,7 +145,7 @@ class ArtModeController(
 
             progress.step = Step.SET_STATUS
             progress.setSent = true
-            try {
+            val reply = try {
                 session.setArtMode(on = true, timeoutMs = timeouts.setMs)
             } catch (e: TvException.RequestFailed) {
                 val detail = "error_code ${e.rawCode ?: "missing"}"
@@ -153,6 +154,10 @@ class ArtModeController(
                     return ArtOutcome(AttemptResult(Outcome.TERMS_NOT_ACCEPTED, Step.SET_STATUS, detail), false)
                 }
                 return ArtOutcome(AttemptResult(Outcome.ART_REQUEST_FAILED, Step.SET_STATUS, detail), true)
+            }
+            if (reply == SetReply.ANNOUNCED) {
+                // The TV said so itself; a read-back would race the sleep it is about to cause.
+                return ArtOutcome(AttemptResult(Outcome.ART_CONFIRMED, Step.SET_STATUS, "announced by the TV"), false)
             }
 
             // Informational: the TV may already be putting this device to sleep over HDMI-CEC.

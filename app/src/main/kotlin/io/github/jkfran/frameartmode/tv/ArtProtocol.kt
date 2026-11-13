@@ -90,6 +90,17 @@ object ArtProtocol {
 
     fun isError(payload: JSONObject): Boolean = subEvent(payload) == "error"
 
+    /** The art app's own announcement that Art Mode changed, sent to every connected client. */
+    const val EVENT_ART_MODE_CHANGED = "art_mode_changed"
+
+    /** The Art Mode an `art_mode_changed` announcement reports (`on` / `off`), else null. */
+    fun announcedArtMode(payload: JSONObject): String? =
+        if (subEvent(payload) == EVENT_ART_MODE_CHANGED) {
+            payload.stringOrNull("status") ?: payload.stringOrNull("value")
+        } else {
+            null
+        }
+
     /** `error_code` as a number; the TV may send it as `"-2"` or `-2`. */
     fun errorCode(payload: JSONObject): Int? {
         val value: Any? = payload.opt("error_code")
